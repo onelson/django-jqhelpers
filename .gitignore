@@ -1,0 +1,16 @@
+/.project
+/.pydevproject
+*.pyc
+*.db
+/.installed.cfg
+/bin
+/dist
+/parts
+/eggs
+/downloads
+/build
+/develop-eggs
+*.egg-info
+/*.egg
+/setup.cfg
+/src/jqhelpers/RELEASE-VERSION
