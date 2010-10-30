@@ -8,6 +8,10 @@
 	<title></title>
 
 {% load jq_tags %}
+{% jq_add_inline %}
+$('#demo','#content').css({'line-height': '200px', 'text-align': 'center', 'width': '500px'});
+{% endjq_add_inline %}
+
 <!-- the css link elem is not included in jquery_all -->
 {% jquery_css %}
 
@@ -16,7 +20,7 @@
 
 {% block content %}
 <div id="content">
-  <div id="demo" style="position: absolute; background-color: red; height: 200px; width: 200px;"></div>
+  <div id="demo" style="position: absolute; background-color: red; height: 200px; width: 200px;">no js here!</div>
 </div>
 {% jq_add_inline %}
 $('#demo','#content').css('background-color','green');
@@ -25,12 +29,15 @@ $('#demo','#content').css('background-color','green');
 {% endblock content %}
 
 {% jq_add_inline %}
-jQuery('#demo','#content').text('progressively enhanced');
-django.jQuery('#demo','#content').css('border', 'solid 5px');
-$('#demo','#content').css({'line-height': '200px', 'text-align': 'center', 'width': '500px'});
+jQuery('#demo','#content').text('progressively enhanced').css('height', '300px');
+django.jQuery('#demo','#content').css({'border': 'solid 5px', 'line-height': function(){ return $(this).outerHeight().toString()+'px'}});
 {% endjq_add_inline %}
 
 {% jquery %}
+{% comment %}
+All jq_add_inline tags must appear before the jq_inline tag is 
+found in the template!
+{% endcomment %}
 {% jq_inline %}
 {% comment %}
 {% jquery_ui %}
