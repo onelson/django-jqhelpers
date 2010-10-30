@@ -1,4 +1,5 @@
 from django import template
+from django.utils.safestring import mark_safe
 register = template.Library()
 import jqhelpers.conf
 
@@ -6,14 +7,10 @@ INLINES = 'jq_inline'
 
 @register.simple_tag
 def jquery():
-    return '''<script type="text/javascript" src="{url}"></script>
+    return mark_safe('''<script type="text/javascript" src="{url}"></script>
        <script type="text/javascript">
        var django = {{jQuery: jQuery.noConflict(true)}};
-       </script>'''.format(url=jqhelpers.conf.JQHELPERS_JQUERY_SRC)
-
-#class JQueryNode(template.Node):
-#    def render(self, context):
-#        return datetime.datetime.now().strftime(self.format_string)
+       </script>'''.format(url=jqhelpers.conf.JQHELPERS_JQUERY_SRC))
 
 @register.simple_tag
 def jquery_css(): return ''
@@ -40,11 +37,11 @@ class JQInline(template.Node):
     def render(self, context):
         if not context[INLINES]: return ''
         script = '\n'.join(context[INLINES])
-        return '''
+        return mark_safe('''
         <script type="text/javascript">
         (function(jQuery){{
             (function($){{
                 {script}
             }})(jQuery);
         }})(django.jQuery);
-        </script>'''.format(script=script)
+        </script>'''.format(script=script))
