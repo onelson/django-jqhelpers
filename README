@@ -56,3 +56,5 @@ Renders the <link /> tag for the jquery ui css resource specified in JQHELPERS_J
 
 Usage
 -----
+
+See the template in mysite/templates/demo.html for examples of tag usage.
