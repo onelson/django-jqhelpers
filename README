@@ -48,7 +48,7 @@ closure that manages aliases for `jQuery`, `django.jQuery`, and `$`.
 Renders the script tag for the jQuery Library.
 
 {% jquery_ui %}
-Renders the script tag for the jQuery UI Library.
+The same as the `jquery` tag, but includes a script tag for jQuery UI.
 
 {% jquery_ui_theme %}
 Renders the <link /> tag for the jquery ui css resource specified in JQHELPERS_JQUERY_UI_THEME.
