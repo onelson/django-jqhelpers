@@ -1,0 +1,58 @@
+Jqhelpers
+---------
+
+Desinged to promote jquery "best practice" within a django project.  
+The overall idea is to provide scaffolding for authors of reusable 
+apps so they can use (and reuse) javascript resources in a non-competitive way.
+
+
+Settings
+--------
+
+JQHELPERS_JQUERY_SRC (default: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js')
+The jQuery library to use.
+JQHELPERS_JQUERY_UI_SRC (default: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js')
+The jQuery UI library to use.
+
+JQHELPERS_JQUERY_UI_THEME (default: STATICFILES_URL+'default-theme.css')
+
+The jQuery UI theme to use.
+You'll have to download and unpack it yourself!
+
+
+Template Tags
+-------------
+
+{% jq_add_plugin <url> %}
+Stores a url to a jquery plugin in the template context to be rendered later by `jq_plugins`.
+
+{% jq_add_script <url> %}
+Stores a url to a jquery script in the template context to be rendered later by `jq_plugins`.
+
+{% jq_add_inline %} and {% endjq_add_inline %}
+The text between these tags are captured and stored in the template context to be rendered 
+later by `jq_inlines`.
+
+{% jq_plugins %}
+Renders a series of **unique** script tags sourcing the plugins added by `jq_add_plugin`.
+
+{% jq_scripts %}
+Renders a series of **unique** script tags sourcing the scripts added by `jq_add_script`.
+
+
+{% jq_inlines %}
+Renders inline scripts captured by jq_add_inline, and wraps them in a document.ready 
+closure that manages aliases for `jQuery`, `django.jQuery`, and `$`.
+
+{% jquery %}
+Renders the script tag for the jQuery Library.
+
+{% jquery_ui %}
+Renders the script tag for the jQuery UI Library.
+
+{% jquery_ui_theme %}
+Renders the <link /> tag for the jquery ui css resource specified in JQHELPERS_JQUERY_UI_THEME.
+
+
+Usage
+-----
