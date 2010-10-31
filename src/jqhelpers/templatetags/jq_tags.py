@@ -8,15 +8,11 @@ register = template.Library()
 PLUGIN_CONTEXT_KEY = 'jq_plugins'
 SCRIPT_CONTEXT_KEY = 'jq_scripts'
 SCRIPT_INLINE_CONTEXT_KEY = 'jq_script_inline'
-CSS_CONTEXT_KEY = 'jq_css'
-CSS_INLINE_CONTEXT_KEY = 'jq_css_inline'
 
 __initial_context__ = {
     PLUGIN_CONTEXT_KEY: [],
     SCRIPT_CONTEXT_KEY: [],
     SCRIPT_INLINE_CONTEXT_KEY: [],
-    CSS_CONTEXT_KEY: [],
-    CSS_INLINE_CONTEXT_KEY: []
 }
 
 @register.tag
@@ -88,40 +84,12 @@ class ContextListAdd(template.Node):
         context[self.context_key].append(self.item)
         return ''
 
-class ContextListInsert(template.Node): 
-    """
-    Inserts the arg `item` at index `index` to a list of items in the current context.
-    """
-    context_key = None
-    
-    def __init__(self, index, item):
-        if not self.context_key: raise NotImplementedError
-        self.index = int(index)
-        self.item = str(item)
-    
-    def render(self, context):
-        # TODO: need to figure out a way to substitute context vars 
-        # in this string before appending
-        context[self.context_key].insert(self.index, self.item)
-        return ''
-
 class AddPlugin(ContextListAdd):
     context_key = PLUGIN_CONTEXT_KEY
 
 class AddScript(ContextListAdd):
     context_key = SCRIPT_CONTEXT_KEY
 
-class AddCSS(ContextListAdd):
-    context_key = CSS_CONTEXT_KEY
-
-class InsertPlugin(ContextListInsert):
-    context_key = PLUGIN_CONTEXT_KEY
-    
-class InsertScript(ContextListInsert):
-    context_key = SCRIPT_CONTEXT_KEY
-    
-class InsertCSS(ContextListInsert):
-    context_key = CSS_CONTEXT_KEY
 
 @register.tag
 def jq_scripts(parser, token):
@@ -131,11 +99,6 @@ def jq_scripts(parser, token):
 def jq_plugins(parser, token):
     return RenderContextList(context_key=PLUGIN_CONTEXT_KEY, 
                              wrapper='<script type="text/javascript" src="{0}"></script>')
-
-@register.tag
-def jq_css(parser, token):
-    return RenderContextList(context_key=CSS_CONTEXT_KEY, 
-                             wrapper='<link href="{0}" rel="stylesheet", type="text/css" />')
 
 @register.tag
 def jq_add_script(parser, token):
@@ -157,16 +120,6 @@ def jq_add_plugin(parser, token):
         raise template.TemplateSyntaxError, "%r tag's argument should be in quotes" % tag_name
     return AddPlugin(src)
 
-@register.tag
-def jq_add_css(parser, token):
-    try:
-        tag_name, href = token.split_contents()
-    except ValueError:
-        raise template.TemplateSyntaxError, "%r tag requires a single argument" % token.contents.split()[0]
-    if not (href[0] == href[-1] and href[0] in ('"', "'")):
-        raise template.TemplateSyntaxError, "%r tag's argument should be in quotes" % tag_name
-    return AddCSS(href)
-
 @register.simple_tag
 def jquery():
     return mark_safe('''<script type="text/javascript" src="{jquery}"></script>
@@ -182,3 +135,7 @@ def jquery_ui():
     var django = {{jQuery: jQuery.noConflict(true)}};
     </script>'''.format(jquery=jqhelpers.conf.JQHELPERS_JQUERY_SRC,
                         jquery_ui=jqhelpers.conf.JQHELPERS_JQUERY_UI_SRC))
+
+@register.simple_tag
+def jquery_ui_theme():
+    return mark_safe('''<link href="{0}" rel="stylesheet" type="text/css" />'''.format(jqhelpers.conf.JQHELPERS_JQUERY_UI_THEME))
