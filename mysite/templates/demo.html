@@ -8,12 +8,14 @@
 	<title></title>
 
 {% load jq_tags %}
+
+{% jq_add_script '{{ STATICFILES_URL }}js/foo.js' %}
 {% jq_add_inline %}
 $('#demo','#content').css({'line-height': '200px', 'text-align': 'center', 'width': '500px'});
 {% endjq_add_inline %}
 
-<!-- the css link elem is not included in jquery_all -->
-{% jquery_css %}
+<!-- css render node should go in the head element -->
+{% jq_css %}
 
 </head>
 <body>
@@ -25,7 +27,6 @@ $('#demo','#content').css({'line-height': '200px', 'text-align': 'center', 'widt
 {% jq_add_inline %}
 $('#demo','#content').css('background-color','green');
 {% endjq_add_inline %}
-
 {% endblock content %}
 
 {% jq_add_inline %}
@@ -33,18 +34,32 @@ jQuery('#demo','#content').text('progressively enhanced').css('height', '300px')
 django.jQuery('#demo','#content').css({'border': 'solid 5px', 'line-height': function(){ return $(this).outerHeight().toString()+'px'}});
 {% endjq_add_inline %}
 
-{% jquery %}
+
+{% jq_add_plugin '{{ STATICFILES_URL }}js/some/3rdParty/plugin.js' %}
+
 {% comment %}
-All jq_add_inline tags must appear before the jq_inline tag is 
+Use one of the following:
+{% jquery %}
+{% jquery_ui %}
+{% endcomment %}
+
+{% jquery_ui %}
+
+{% comment %}
+All jq_add_xxx and jq_insert_xxx tags must appear before the jq_xxx tag is 
 found in the template!
 {% endcomment %}
-{% jq_inline %}
-{% comment %}
-{% jquery_ui %}
+
+<!-- render nodes -->
 {% jq_plugins %}
 {% jq_scripts %}
-<!-- or -->
+{% jq_inline %}
+<!-- end render nodes -->
+
+{% comment %}
+TODO: add an inclusion tag to just handle all of the above render nodes...
 {% jquery_all %}
 {% endcomment %}
+
 </body>
 </html>

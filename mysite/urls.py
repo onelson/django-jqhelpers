@@ -9,6 +9,3 @@ urlpatterns = patterns('',
     (r'^$', 'django.views.generic.simple.direct_to_template', 
      {'template':'demo.html'}),
 )
-import logging
-LOG = logging.getLogger(__name__)
-LOG.debug('foo')
