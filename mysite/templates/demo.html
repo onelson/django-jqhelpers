@@ -8,14 +8,13 @@
 	<title></title>
 
 {% load jq_tags %}
+<!-- theme render node should go in the head element -->
+{% jquery_ui_theme %}
 
 {% jq_add_script '{{ STATICFILES_URL }}js/foo.js' %}
 {% jq_add_inline %}
 $('#demo','#content').css({'line-height': '200px', 'text-align': 'center', 'width': '500px'});
 {% endjq_add_inline %}
-
-<!-- css render node should go in the head element -->
-{% jq_css %}
 
 </head>
 <body>
@@ -46,7 +45,7 @@ Use one of the following:
 {% jquery_ui %}
 
 {% comment %}
-All jq_add_xxx and jq_insert_xxx tags must appear before the jq_xxx tag is 
+All jq_add_xxx tags must appear before the jq_xxx tag is 
 found in the template!
 {% endcomment %}
 
