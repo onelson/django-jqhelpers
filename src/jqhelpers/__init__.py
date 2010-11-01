@@ -1,6 +1,7 @@
-import logging, os
-from pkg_resources import resource_filename
-from subprocess import Popen, PIPE
+import os
+from pkg_resources import resource_filename #@UnresolvedImport
+from subprocess import Popen, PIPE #@UnresolvedImport
+
 __VERSION_FILE__ = "RELEASE-VERSION"
 
 def __call_git_describe(abbrev=4):
@@ -48,6 +49,5 @@ def get_git_version(abbrev=4):
         __write_release_version(version)
     # Finally, return the current version.
     return version
-
 
 __version__ = get_git_version()

@@ -14,3 +14,8 @@
 /*.egg
 /setup.cfg
 /src/jqhelpers/RELEASE-VERSION
+/.coverage
+/coverage.xml
+/nosetests.xml
+/pylint.txt
+
