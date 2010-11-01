@@ -14,7 +14,7 @@ The jQuery library to use.
 JQHELPERS_JQUERY_UI_SRC (default: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js')
 The jQuery UI library to use.
 
-JQHELPERS_JQUERY_UI_THEME (default: STATICFILES_URL+'default-theme.css')
+JQHELPERS_JQUERY_UI_THEME (default: STATICFILES_URL+'uitheme.css')
 
 The jQuery UI theme to use.
 You'll have to download and unpack it yourself!
@@ -24,10 +24,10 @@ Template Tags
 -------------
 
 {% jq_add_plugin <url> %}
-Stores a url to a jquery plugin in the template context to be rendered later by `jq_plugins`.
+Stores a url (relative to STATICFILES_URL) to a jquery plugin in the template context to be rendered later by `jq_plugins`.
 
 {% jq_add_script <url> %}
-Stores a url to a jquery script in the template context to be rendered later by `jq_plugins`.
+Stores a url (relative to STATICFILES_URL) to a jquery script in the template context to be rendered later by `jq_plugins`.
 
 {% jq_add_inline %} and {% endjq_add_inline %}
 The text between these tags are captured and stored in the template context to be rendered 

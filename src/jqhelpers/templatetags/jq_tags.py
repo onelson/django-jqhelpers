@@ -2,6 +2,7 @@ from django import template
 from django.utils.safestring import mark_safe
 from jqhelpers.utils import unique_list
 import jqhelpers.conf
+from django.conf import settings
 
 register = template.Library()
 
@@ -79,9 +80,7 @@ class ContextListAdd(template.Node):
         self.item = str(item)
     
     def render(self, context):
-        # TODO: need to figure out a way to substitute context vars 
-        # in this string before appending
-        context[self.context_key].append(self.item)
+        context[self.context_key].append(settings.STATICFILES_URL+self.item)
         return ''
 
 class AddPlugin(ContextListAdd):
@@ -89,7 +88,6 @@ class AddPlugin(ContextListAdd):
 
 class AddScript(ContextListAdd):
     context_key = SCRIPT_CONTEXT_KEY
-
 
 @register.tag
 def jq_scripts(parser, token):
@@ -108,7 +106,7 @@ def jq_add_script(parser, token):
         raise template.TemplateSyntaxError, "%r tag requires a single argument" % token.contents.split()[0]
     if not (src[0] == src[-1] and src[0] in ('"', "'")):
         raise template.TemplateSyntaxError, "%r tag's argument should be in quotes" % tag_name
-    return AddScript(src)
+    return AddScript(src[1:-1])
 
 @register.tag
 def jq_add_plugin(parser, token):
@@ -118,7 +116,7 @@ def jq_add_plugin(parser, token):
         raise template.TemplateSyntaxError, "%r tag requires a single argument" % token.contents.split()[0]
     if not (src[0] == src[-1] and src[0] in ('"', "'")):
         raise template.TemplateSyntaxError, "%r tag's argument should be in quotes" % tag_name
-    return AddPlugin(src)
+    return AddPlugin(src[1:-1])
 
 @register.simple_tag
 def jquery():

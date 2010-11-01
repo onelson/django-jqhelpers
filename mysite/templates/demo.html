@@ -11,7 +11,7 @@
 <!-- theme render node should go in the head element -->
 {% jquery_ui_theme %}
 
-{% jq_add_script '{{ STATICFILES_URL }}js/foo.js' %}
+{% jq_add_script 'js/foo.js' %}
 
 {% jq_add_inline %}
 $('#demo','#content').css({'line-height': '200px', 'text-align': 'center', 'width': '500px'});
@@ -35,7 +35,7 @@ django.jQuery('#demo','#content').css({'border': 'solid 5px', 'line-height': fun
 {% endjq_add_inline %}
 
 
-{% jq_add_plugin '{{ STATICFILES_URL }}js/some/3rdParty/plugin.js' %}
+{% jq_add_plugin 'js/some/3rdParty/plugin.js' %}
 
 {% comment %}
 Use one of the following:
