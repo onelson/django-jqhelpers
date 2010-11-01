@@ -1,23 +1,23 @@
-"""
-This file demonstrates two different styles of tests (one doctest and one
-unittest). These will both pass when you run "manage.py test".
+from django.utils import unittest
+from django.test.client import Client
 
-Replace these with more appropriate tests for your application.
-"""
+def is_unique_list(seq):
+    for i in seq:
+        if seq.count(i) != 1:
+            return False
+    return True
 
-from django.test import TestCase
+class SimpleTest(unittest.TestCase):
+    def setUp(self):
+        # Every test needs a client.
+        self.client = Client()
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.failUnlessEqual(1 + 1, 2)
+    def test_details(self):
+        # Issue a GET request.
+        response = self.client.get('/')
 
-__test__ = {"doctest": """
-Another way to test that 1 + 1 is equal to 2.
-
->>> 1 + 1 == 2
-True
-"""}
-
+        # Check that the response is 200 OK.
+        self.assertEqual(response.status_code, 200)
+        
+        self.assertTrue(is_unique_list(response.context['jq_plugins']))
+        self.assertTrue(is_unique_list(response.context['jq_scripts']))

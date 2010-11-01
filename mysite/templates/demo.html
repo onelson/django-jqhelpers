@@ -36,7 +36,8 @@ django.jQuery('#demo','#content').css({'border': 'solid 5px', 'line-height': fun
 
 
 {% jq_add_plugin 'js/some/3rdParty/plugin.js' %}
-
+<!-- multiple adds will not result in multiple script tags -->
+{% jq_add_plugin 'js/some/3rdParty/plugin.js' %}
 {% comment %}
 Use one of the following:
 {% jquery %}

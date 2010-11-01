@@ -1,6 +1,5 @@
 from django import template
 from django.utils.safestring import mark_safe
-from jqhelpers.utils import unique_list
 import jqhelpers.conf
 from django.conf import settings
 
@@ -66,7 +65,7 @@ class RenderContextList(template.Node):
     
     def render(self, context):
         if not context[self.context_key]: return ''
-        items = self.glue.join([self.wrapper.format(i) for i in unique_list(context[self.context_key])])
+        items = self.glue.join([self.wrapper.format(i) for i in context[self.context_key]])
         return mark_safe(items)
 
 class ContextListAdd(template.Node):
@@ -80,7 +79,9 @@ class ContextListAdd(template.Node):
         self.item = str(item)
     
     def render(self, context):
-        context[self.context_key].append(settings.STATICFILES_URL+self.item)
+        src = settings.STATICFILES_URL+self.item
+        if src not in context[self.context_key]:
+            context[self.context_key].append(src)
         return ''
 
 class AddPlugin(ContextListAdd):
