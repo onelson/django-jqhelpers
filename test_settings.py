@@ -1,7 +1,7 @@
 # Django settings for mysite project.
 import os
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-projpath = lambda s: os.path.join(PROJECT_ROOT,s)
+projpath = lambda s: os.path.join(PROJECT_ROOT, s)
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -14,11 +14,11 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'mysite.db',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': 'mysite.db', # Or path to database file if using sqlite3.
+        'USER': '', # Not used with sqlite3.
+        'PASSWORD': '', # Not used with sqlite3.
+        'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '', # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -107,13 +107,13 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'mysite.urls'
+ROOT_URLCONF = 'test_urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    projpath('templates')
+    projpath('examples')
 )
 
 INSTALLED_APPS = (
@@ -125,10 +125,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_nose',
     'jqhelpers',
-    'mysite.demo',
 )
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = ['--with-xunit', '--with-coverage', '--cover-erase', '--cover-package=jqhelpers']
 
 LOGGING = {
     'version': 1,

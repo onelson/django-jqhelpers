@@ -1,7 +1,10 @@
-python bootstrap.py
-bin/buildout
-bin/django test --with-xunit --with-coverage --cover-erase
-bin/coverage xml --include="src/*"
-python setup.py build
+export VE=/tmp/ve/jqhelpers
+mkdir -p $VE
+virtualenv $VE
+$VE/bin/activate
+pip install -Ur pip/requirements.txt 
+export PYTHONPATH=.:$PYTHONPATH
+export DJANGO_SETTINGS_MODULE=test_settings
+django-admin.py test
+coverage xml --include="jqhelpers/*"
 python setup.py sdist
-python setup.py bdist
