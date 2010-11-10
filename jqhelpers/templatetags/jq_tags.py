@@ -30,7 +30,7 @@ class JQAddInline(template.Node):
         return ''
 
 @register.tag
-def jq_inline(parser, token):
+def jq_inlines(parser, token):
     return JQInline()
 
 class JQInline(template.Node):
@@ -54,15 +54,15 @@ class RenderContextList(template.Node):
     context_key = None
     wrapper = '{}'
     glue = '\n'
-    
+
     def __init__(self, context_key=None, wrapper=None, glue=None):
         if context_key:
             self.context_key = context_key
-        if wrapper: 
+        if wrapper:
             self.wrapper = wrapper
         if glue:
             self.glue = glue
-    
+
     def render(self, context):
         if not context[self.context_key]: return ''
         items = self.glue.join([self.wrapper.format(i) for i in context[self.context_key]])
@@ -73,13 +73,13 @@ class ContextListAdd(template.Node):
     Appends the arg `item` to a list of items in the current context.
     """
     context_key = None
-    
+
     def __init__(self, item):
         if not self.context_key: raise NotImplementedError
         self.item = str(item)
-    
+
     def render(self, context):
-        src = settings.STATICFILES_URL+self.item
+        src = settings.STATICFILES_URL + self.item
         if src not in context[self.context_key]:
             context[self.context_key].append(src)
         return ''
@@ -92,11 +92,11 @@ class AddScript(ContextListAdd):
 
 @register.tag
 def jq_scripts(parser, token):
-    return RenderContextList(context_key=SCRIPT_CONTEXT_KEY, 
+    return RenderContextList(context_key=SCRIPT_CONTEXT_KEY,
                              wrapper='<script type="text/javascript" src="{0}"></script>')
 @register.tag
 def jq_plugins(parser, token):
-    return RenderContextList(context_key=PLUGIN_CONTEXT_KEY, 
+    return RenderContextList(context_key=PLUGIN_CONTEXT_KEY,
                              wrapper='<script type="text/javascript" src="{0}"></script>')
 
 @register.tag
