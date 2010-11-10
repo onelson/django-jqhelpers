@@ -1,6 +1,4 @@
 export VE=/tmp/ve/jqhelpers
-mkdir -p $VE
-virtualenv $VE
 $VE/bin/activate
 pip install -Ur pip/requirements.txt 
 export PYTHONPATH=.:$PYTHONPATH
