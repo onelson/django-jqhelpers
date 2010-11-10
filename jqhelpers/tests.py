@@ -1,5 +1,8 @@
 from django.utils import unittest
 from django.test.client import Client
+from jqhelpers.templatetags.jq_tags import PLUGIN_CONTEXT_KEY, \
+ SCRIPT_CONTEXT_KEY, SCRIPT_INLINE_CONTEXT_KEY
+
 
 def is_unique_list(seq):
     for i in seq:
@@ -7,17 +10,17 @@ def is_unique_list(seq):
             return False
     return True
 
-class SimpleTest(unittest.TestCase):
+
+class RenderDemoTest(unittest.TestCase):
+
     def setUp(self):
-        # Every test needs a client.
         self.client = Client()
+        self.context_keys = [PLUGIN_CONTEXT_KEY,
+                             SCRIPT_CONTEXT_KEY,
+                             SCRIPT_INLINE_CONTEXT_KEY]
 
     def test_details(self):
-        # Issue a GET request.
         response = self.client.get('/')
-
-        # Check that the response is 200 OK.
         self.assertEqual(response.status_code, 200)
-        
-        self.assertTrue(is_unique_list(response.context['jq_plugins']))
-        self.assertTrue(is_unique_list(response.context['jq_scripts']))
+        for key in self.context_keys:
+            self.assertTrue(is_unique_list(response.context[key]))
