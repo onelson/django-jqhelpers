@@ -19,6 +19,12 @@ JQHELPERS_JQUERY_UI_THEME (default: STATICFILES_URL+'uitheme.css')
 The jQuery UI theme to use.
 You'll have to download and unpack it yourself!
 
+Context Processor
+-----------------
+
+Although they don't really do much on their own, the template tags rely on `jqhelpers.context_processors.jqhelpers` being
+in your list of context processors!
+
 
 Template Tags
 -------------
