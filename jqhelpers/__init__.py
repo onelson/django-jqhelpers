@@ -26,7 +26,7 @@ def __read_release_version():
         return None
 
 def __write_release_version(version):
-    f = open(os.path.join(os.path.abspath(os.path.dirname(__file__)),__VERSION_FILE__), "w")
+    f = open(os.path.join(os.path.abspath(os.path.dirname(__file__)), __VERSION_FILE__), "w")
     f.write("%s\n" % version)
     f.close()
 
@@ -50,4 +50,7 @@ def get_git_version(abbrev=4):
     # Finally, return the current version.
     return version
 
-__version__ = get_git_version()
+try:
+    __version__ = get_git_version()
+except ValueError:
+    __version__ = 'git-unknown'
