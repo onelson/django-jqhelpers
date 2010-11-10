@@ -1,5 +1,5 @@
 export VE=/tmp/ve/jqhelpers
-$VE/bin/activate
+source $VE/bin/activate
 pip install -Ur pip/requirements.txt 
 export PYTHONPATH=.:$PYTHONPATH
 export DJANGO_SETTINGS_MODULE=test_settings
