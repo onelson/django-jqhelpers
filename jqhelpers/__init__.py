@@ -52,5 +52,5 @@ def get_git_version(abbrev=4):
 
 try:
     __version__ = get_git_version()
-except ValueError:
-    __version__ = 'git-unknown'
+except (ValueError, IOError):
+    __version__ = 'unknown'
