@@ -19,7 +19,7 @@ class RenderDemoTest(unittest.TestCase):
                              SCRIPT_CONTEXT_KEY,
                              SCRIPT_INLINE_CONTEXT_KEY]
 
-    def test_details(self):
+    def test_unique_context_content(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         for key in self.context_keys:
