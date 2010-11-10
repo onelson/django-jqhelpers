@@ -1,4 +1,4 @@
 include MANIFEST.in
 include README
-include RELEASE-VERSION
+include jqhelpers/RELEASE-VERSION
 recursive-include jqhelpers *.py *.html *.sql *.json
