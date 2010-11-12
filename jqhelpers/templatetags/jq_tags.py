@@ -26,7 +26,8 @@ class JQAddInline(template.Node):
         self.nodelist = nodelist
     def render(self, context):
         script = self.nodelist.render(context)
-        context[SCRIPT_INLINE_CONTEXT_KEY].append(script)
+        if script not in context[SCRIPT_INLINE_CONTEXT_KEY]:
+            context[SCRIPT_INLINE_CONTEXT_KEY].append(script)
         return ''
 
 @register.tag
@@ -76,7 +77,7 @@ class ContextListAdd(template.Node):
 
     def __init__(self, item):
         if not self.context_key: raise NotImplementedError
-        self.item = str(item)
+        self.item = str(item).strip()
 
     def render(self, context):
         src = settings.STATICFILES_URL + self.item
