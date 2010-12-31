@@ -80,7 +80,7 @@ class ContextListAdd(template.Node):
         self.item = str(item).strip()
 
     def render(self, context):
-        src = settings.STATICFILES_URL + self.item
+        src = settings.STATIC_URL + self.item
         if src not in context[self.context_key]:
             context[self.context_key].append(src)
         return ''
